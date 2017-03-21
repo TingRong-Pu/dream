@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>水平拖动条</title>
+		<style type="text/css">
+			*
+			{
+				margin: 0;
+				padding: 0;
+			}
+			.scroll
+			{
+				width: 400px;
+				height: 8px;
+				background-color: #CCCCCC;
+				margin: 100px;
+				position: relative;
+			}
+			 .bar
+			 {
+			 	width: 10px;
+			 	height: 22px;
+			 	background-color: #369;
+			 	position: absolute;
+			 	top: -7px;
+			 	left: 0;
+			 	cursor: pointer;
+			 }
+			 .mask
+			 {
+			 	width: 0px;
+			 	height: 8px;
+			 	background-color: #369;
+			 	position: absolute;
+			 	top: 0;
+			 	left: 0;
+			 }
+		</style>
+
+	</head>
+	<body>
+		<div id="scrollBar" class="scroll">
+			<div class="bar"></div>
+			<div class="mask"></div>
+		</div>
+		<div id="demo">已经拖动了：100%</div>
+		
+		
+		<script type="text/javascript">
+			var scrollBar=document.getElementById("scrollBar");
+			var bar=scrollBar.children[0];
+			var mask=scrollBar.children[1];
+			var demo=document.getElementById("demo");
+			bar.onmousedown=function(event)
+			{
+				var event = event || window.event;
+				var leftval=event.clientX-this.offsetLeft;//leftval是指当前对象到页面左边距的距离；
+				var that=this;
+				document.onmousemove=function(event)
+				{
+					var event=event || window.event;
+					that.style.left=event.clientX-leftval+"px";//用鼠标所在的x位置减去最开始时点击对象距离页面的边距等于对象移动的距离；
+					var val=parseInt(that.style.left);
+					
+					if (val<0) {
+						that.style.left=0;
+					   }
+					else if (val>390) {
+						that.style.left="390px";
+					   }
+				   mask.style.width = that.style.left;//遮罩盒子的宽度
+				   demo.innerHTML="它已经拖动了:"+parseInt(parseInt(that.style.left)/390*100)+"%";
+				   window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();//按下鼠标拖拽是可以选着文字，所以这是用来清除选中的内容
+				}
+				document.onmouseup=function()
+				  {
+					document.onmousemove=null;//抬起鼠标不做任何事
+				  }
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		</script>
+	</body>
+</html>
