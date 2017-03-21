@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*
+			{
+				margin: 0;
+				padding: 0;
+			}
+			img
+			{
+				vertical-align: top;
+			}
+			.box
+			{
+				width: 350px;
+				height: 350px;
+				margin: 100px;
+				border: 1px solid #ccc;
+			    position: relative;
+			}
+			.big
+			{
+				width: 450px;
+				height: 450px;
+				position: absolute;
+				top: 0;
+				left: 360px;
+				border: 1px solid #ccc;
+				overflow: hidden;
+				display: none;
+			}
+			.small
+			{
+				position: relative;
+			}
+			.mask
+			{
+				width: 100px;
+				height: 100px;
+				background: rgba(255,255,0,0.5);
+				position: absolute;
+				top: 0;
+				left: 0;
+				cursor: move;
+				display: none;
+			}
+			.big img
+			{
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload=function()
+   {
+	var fdj=document.getElementById("fdj");
+	var small=fdj.children[0];
+	var big=fdj.children[1];
+	var mask=small.children[1];
+	var bigimage=big.children[0];
+	//鼠标移动到small盒子中时：
+	small.onmouseover=function()
+	 {
+	 	mask.style.display="block";
+	 	big.style.display="block";
+	 }
+	small.onmouseout=function()
+	 {
+	 	mask.style.display="none";
+	 	big.style.display="none";
+	 }
+		var X=0,
+		    Y=0;
+	 small.onmousemove=function(event)
+	 {
+	 var event=event || window.event;
+	 var X=event.clientX-this.offsetParent.offsetLeft-mask.offsetWidth/2;
+	 var Y=event.clientY-this.offsetParent.offsetTop-mask.offsetHeight/2;
+	 if (X<0) 
+	 {
+	     X=0;	
+	 }
+	 else if (X>250) {
+	 	X=250;
+	 }
+	  if (Y<0) 
+	 {
+	     Y=0;	
+	 }
+	 else if (Y>250) {
+	 	Y=250;
+	 }
+	mask.style.left=X+"px";
+	mask.style.top=Y+"px";	 
+	bigimage.style.left=-X*big.offsetWidth/small.offsetWidth+"px";
+	bigimage.style.top=-Y*big.offsetHeight/small.offsetHeight+"px";
+	 } 	 
+   }	
+		</script>
+	</head>
+	<body>
+		<div id="fdj" class="box">
+			<div class="small">
+				<img src="img/001.jpg" alt=""/>
+				<div class="mask"></div>
+			</div>
+			<div class="big">
+				<img src="img/0001.jpg" alt=""/>
+			</div>
+		</div>
+	</body>
+</html>
